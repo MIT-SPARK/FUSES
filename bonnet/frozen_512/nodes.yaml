@@ -1,0 +1,6 @@
+code_node: test_model/model/encoder/godeep/non-bt-4/non_bt/res/relu/LeakyRelu/Maximum
+input_node: x_pl
+input_norm_and_resized_node: test_model/model/images/truediv
+logits_node: test_model/model/logits/linear/BiasAdd
+mask_node: output/ArgMax
+out_probs_node: output/Reshape_1

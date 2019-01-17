@@ -1,0 +1,13 @@
+%YAML:1.0
+#SUPERPIXEL PARAMETERS
+num_sp: 2000
+sp_iterations: 10
+ratio: 0.075
+min_element_size: 20
+nr_levels: 8
+prior: 3
+histogram_bins: 5
+#SEGMENTATION PARAMETERS
+lambda1: 0.2
+lambda2: 0.2
+beta: 0.0001

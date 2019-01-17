@@ -1,0 +1,5 @@
+@PACKAGE_INIT@
+
+include(${PROJECT_BINARY_DIR}/FUSES.cmake)
+set(FUSES_INCLUDE_DIR /usr/local/include ${SPECTRA_INCLUDE_DIR} ${OPTIMIZATION_DIR}/include)
+set(FUSES_LIBRARIES /usr/local/lib/libfuses.so)
