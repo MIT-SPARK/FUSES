@@ -27,7 +27,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR}/bin CACHE PATH "The direc
 ############# DEPENDENCIES #############
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_extensions/)
 ### Find opencv
-find_package(OpenCV REQUIRED)
+find_package(OpenCV 3.4 REQUIRED)
 if (OpenCV_FOUND)
   message(STATUS "FOUND OpenCV!")
 else (OpenCV_FOUND)
