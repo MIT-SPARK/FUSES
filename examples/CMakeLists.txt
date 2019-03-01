@@ -2,15 +2,26 @@
 # EXAMPLE EXECUTABLES #
 #######################
 
-# Build the fuses-example_bonnet executable 
+# Build the fuses-bonnet-Cityscapes executable 
 if (bonnet_FOUND)
-	add_executable(fuses-example-bonnet fuses-example-bonnet.cpp ${FUSES_SOURCES} ${bonnet_SOURCES})
-	target_include_directories(fuses-example-bonnet PRIVATE ${SPECTRA_INCLUDE_DIR})
-	target_include_directories(fuses-example-bonnet PUBLIC ${bonnet_INCLUDES})
-	target_link_libraries(fuses-example-bonnet optimization ${OpenCV_LIBS} ${GTSAM_LIBRARIES} ${HDF5_LIBRARIES} ${bonnet_LIBRARIES})
-	message(STATUS "Type 'make fuses-example-bonnet' to build the example.\n")
+	add_executable(fuses-bonnet-Cityscapes fuses-bonnet-Cityscapes.cpp ${FUSES_SOURCES} ${bonnet_SOURCES})
+	target_include_directories(fuses-bonnet-Cityscapes PRIVATE ${SPECTRA_INCLUDE_DIR})
+	target_include_directories(fuses-bonnet-Cityscapes PUBLIC ${bonnet_INCLUDES})
+	target_link_libraries(fuses-bonnet-Cityscapes optimization ${OpenCV_LIBS} ${GTSAM_LIBRARIES} ${HDF5_LIBRARIES} ${bonnet_LIBRARIES})
+	message(STATUS "Type 'make fuses-bonnet-Cityscapes' to build the example.\n")
 else(bonnet_FOUND)
-  message(STATUS "Skipping fuses-example_bonnet example, since Bonnet is disabled")
+  message(STATUS "Skipping fuses-bonnet-Cityscapes example, since Bonnet is disabled")
+endif(bonnet_FOUND)
+
+# Build the fuses-bonnet-batch executable 
+if (bonnet_FOUND)
+	add_executable(fuses-bonnet-batch fuses-bonnet-batch.cpp ${FUSES_SOURCES} ${bonnet_SOURCES})
+	target_include_directories(fuses-bonnet-batch PRIVATE ${SPECTRA_INCLUDE_DIR})
+	target_include_directories(fuses-bonnet-batch PUBLIC ${bonnet_INCLUDES})
+	target_link_libraries(fuses-bonnet-batch optimization ${OpenCV_LIBS} ${GTSAM_LIBRARIES} ${HDF5_LIBRARIES} ${bonnet_LIBRARIES})
+	message(STATUS "Type 'make fuses-bonnet-batch' to build the example.\n")
+else(bonnet_FOUND)
+  message(STATUS "Skipping fuses-bonnet-batch example, since Bonnet is disabled")
 endif(bonnet_FOUND)
 
 ########################

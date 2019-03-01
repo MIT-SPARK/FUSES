@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.1)
 
 # PROJECT CONFIGURATION
 project (FUSES CXX C)
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON) # We require C++ 14
 
 # Enable faster instruction sets (SIMD/AVX)
 add_compile_options(-march=native)
+add_definitions(-std=c++14)
 
 # Set build type to 'RelWithDebInfo' if one was not specified by the user
 if(NOT CMAKE_BUILD_TYPE)
@@ -27,7 +27,7 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_BINARY_DIR}/bin CACHE PATH "The direc
 ############# DEPENDENCIES #############
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_extensions/)
 ### Find opencv
-find_package(OpenCV 3.4 REQUIRED)
+find_package(OpenCV 3.3.1 REQUIRED)
 if (OpenCV_FOUND)
   message(STATUS "FOUND OpenCV!")
 else (OpenCV_FOUND)

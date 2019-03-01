@@ -20,7 +20,7 @@
 #include <iostream>
 #include <string>
 #include <boost/optional.hpp>
-
+#include <yaml-cpp/yaml.h>
 #include "FUSES/SegmentationFrontEnd.h"
 
 namespace UtilsFuses {
@@ -190,16 +190,55 @@ namespace UtilsFuses {
   // Alpha blending of two images
   void alphaBlend(const cv::Mat& foreground, const cv::Mat& background,
       float alpha, cv::Mat& outImage) {
-    // Find number of pixels.
-    int numberOfPixels = background.rows * background.cols *
-        background.channels();
-
     // resize
     cv::Mat foregroundCopy;
     cv::resize(foreground, foregroundCopy, background.size(), 0, 0,
         cv::INTER_NEAREST);
 
     cv::addWeighted(foregroundCopy, alpha, background, 1.0-alpha, 0.0, outImage);
+  }
+
+  /* ----------------------------------------------------------------------- */
+  // Setup labelToBGR vector given a yaml data file
+  void InitColor(const std::string& dataFile,
+      std::vector<cv::Vec3b>& labelToBGR) {
+    YAML::Node cfg_data;
+    try {
+      cfg_data = YAML::LoadFile(dataFile);
+    } catch (YAML::Exception& ex) {
+      throw std::invalid_argument("Invalid yaml file " + dataFile);
+    }
+
+    // parse the colors for the color conversion
+    YAML::Node label_remap;
+    YAML::Node color_map;
+    try {
+      label_remap = cfg_data["label_remap"];
+      color_map = cfg_data["color_map"];
+
+    } catch (YAML::Exception& ex) {
+      std::cerr << "Can't open one of the color dictionaries from "
+                << dataFile << ex.what() << std::endl;
+    }
+
+    // get the remapping from both dictionaries, in order to speed up conversion
+    size_t nrClasses = label_remap.size();
+    for (size_t i = 0; i < nrClasses; ++i) {
+      cv::Vec3b color = {0, 0, 0};
+      labelToBGR.push_back(color);
+    }
+
+    YAML::const_iterator it;
+    for (it = label_remap.begin(); it != label_remap.end(); ++it) {
+      int key = it->first.as<int>();     // <- key
+      int label = it->second.as<int>();  // <- label
+      cv::Vec3b color = {
+          static_cast<uint8_t>(color_map[key][0].as<unsigned int>()),
+          static_cast<uint8_t>(color_map[key][1].as<unsigned int>()),
+          static_cast<uint8_t>(color_map[key][2].as<unsigned int>())
+      };
+      labelToBGR[label] = color;
+    }
   }
 
   /* ----------------------------------------------------------------------- */

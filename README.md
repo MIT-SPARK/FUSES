@@ -1,4 +1,4 @@
-# README - FUSES: Fast Understanding via SEmidefinite Segmentation
+README - FUSES: Fast Understanding via SEmidefinite Segmentation
 ======================================
 
 What is FUSES?
@@ -16,7 +16,6 @@ Prerequisites (Find installation instructions below for all of the following):
 - [GTSAM >= 4.0](#installation-of-gtsam)
 - [OpenCV](#installation-of-opencv)
 - [OpenGV](#installation-of-opengv)
-- [SuiteSparse](#installation-of-suitesparse)
 - [HDF5 >= 1.8](#installation-of-hdf5)
 - [YAML-cpp](#installation-of-yaml-cpp)
 - [OpenGM >= 2.0](#installation-of-opengm)
@@ -30,16 +29,22 @@ In the root library of the sdpSegmentation folder, execute:
 $ mkdir build
 $ cd build
 $ cmake ../
-$ make
 $ make check
+$ make
+$ make install
 ```
 
 If there are errors about finding hdf5 include directory, use cmake-gui to set HDF5_INCLUDE_DIRS (e.g., on Linux computer, the default path is "/usr/include/hdf5/serial")
 
-If there are errors about SQPR when running cmake, use cmake-gui to set EIGEN_CMAKE_PATH = "gtsam-path/3rdparty/Eigen/cmake/" (e.g., on Luca's computer gtsam-path is "/Users/luca/borg/gtsam/gtsam" and EIGEN_CMAKE_PATH = "/Users/luca/borg/gtsam/gtsam/3rdparty/Eigen/cmake/")
+Running exampel with bonnet on Cityscapes dataset (in build folder):
+
+```
+$ ./bin/fuses-example-bonnet <path/to/Cityscapes/dataset> lindau ../bonnet/frozen_512 ../tests/data/fusesParameters.yaml
+```
+
+This repo contains a parser `src/include/FUSES/CityscapesParser.h` for the [Cityscapes](https://www.cityscapes-dataset.com) dataset. This parser will loop through images in the validation set. `<nameOfDataset>` can be set to munster, frankfurt, lindau, or all (meaning all three). [Bonnet](https://github.com/PRBonn/bonnet) provides three pre-trained models for this dataset and they are included in `bonnet` folder as `bonnet/frozen_*`.
 
 KNOW ISSUES:
-- you have to manually set EIGEN_CMAKE_PATH in the cmake file (line 118)
 - you have to comment out "find_package(Bonnet)" (line 99) if you do not have Bonnet installed
 
 
@@ -119,20 +124,6 @@ $ cd build
 $ cmake ../
 $ sudo make -j8 install
 $ make -j8 test
-```
-
-## Installation of SuiteSparse
-
-- On Linux 16.04:
-
-```
-$ sudo apt-get install libsuitesparse-dev
-```
-
-- On Mac:
-
-```
-$ brew install suite-sparse
 ```
 
 ## Installation of YAML-cpp
