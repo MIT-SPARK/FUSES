@@ -9,7 +9,7 @@ FUSES is a library of C++ classes for Fast Semantic Segmentation. Find overview 
 Quickstart
 ----------
 
-This repository links installation instructions to compile and run FUSES on the CityScapes Dataset for Ubuntu 16.04. Note that you cannot run the entire pipeline with Bonnet on Mac due to TensorRT being unavaliable on Mac.
+This repository links installation instructions to compile and run FUSES for Ubuntu 16.04. This repository provides an working example with Bonnet in the frontend. Note that you cannot run the entire pipeline with Bonnet on Mac due to TensorRT being unavaliable on Mac. However, you can switch to any other deep learning architectures. FUSES is an MRF inference algorithm and can work in conjunction with any network. 
 
 Prerequisites (Find installation instructions below for all of the following):
 
@@ -36,17 +36,37 @@ $ make install
 
 If there are errors about finding hdf5 include directory, use cmake-gui to set HDF5_INCLUDE_DIRS (e.g., on Linux computer, the default path is "/usr/include/hdf5/serial")
 
-Running exampel with bonnet on Cityscapes dataset (in build folder):
+Running example with bonnet on Cityscapes dataset (in build folder):
 
 ```
-$ ./bin/fuses-example-bonnet <path/to/Cityscapes/dataset> lindau ../bonnet/frozen_512 ../tests/data/fusesParameters.yaml
+$ ./bin/fuses-bonnet-Cityscapes <path/to/Cityscapes/dataset> lindau ../bonnet/frozen_512 ../tests/data/fusesParameters.yaml
 ```
 
 This repo contains a parser `src/include/FUSES/CityscapesParser.h` for the [Cityscapes](https://www.cityscapes-dataset.com) dataset. This parser will loop through images in the validation set. `<nameOfDataset>` can be set to munster, frankfurt, lindau, or all (meaning all three). [Bonnet](https://github.com/PRBonn/bonnet) provides three pre-trained models for this dataset and they are included in `bonnet` folder as `bonnet/frozen_*`.
 
+Segmenting a folder of images with bonnet and fuses (in build folder):
+
+```
+$ ./bin/fuses-bonnet-batch <path/to/image/folder> ../bonnet/frozen_512 ../tests/data/fusesParameters.yaml
+```
+
 KNOW ISSUES:
 - you have to comment out "find_package(Bonnet)" (line 99) if you do not have Bonnet installed
 
+## Citation
+
+If you use our code for any academic work, please cite its [paper](https://arxiv.org/pdf/1810.11689.pdf).
+
+```
+@article{Hu19ral-fuses,
+	Author = {S. Hu and L. Carlone},
+	Title = {Accelerated Inference in {Markov Random Fields} via Smooth {Riemannian} Optimization},
+	Journal = ral,
+	note = {extended ArXiv version:
+	\linkToPdf{https://arxiv.org/pdf/1810.11689.pdf}},
+	pdf = "https://arxiv.org/pdf/1810.11689.pdf",
+	Year = 2019}
+```
 
 ## Installation of GTSAM
 
